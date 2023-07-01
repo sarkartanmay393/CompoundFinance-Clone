@@ -8,6 +8,7 @@ import {
 import React from "react";
 import Image from "next/image";
 import { useAccount, useDisconnect } from "wagmi";
+import WalletMenu from "./WalletMenu";
 
 export default function NavBar({
   isDark,
@@ -23,10 +24,10 @@ export default function NavBar({
     return classes.filter(Boolean).join(" ");
   }
 
-  React.useEffect(() => {});
+  React.useEffect(() => {}, []);
 
   return (
-    <Disclosure as="nav" style={{ border: "1px solid white" }}>
+    <Disclosure as="nav">
       {({ open }) => (
         <>
           <div className="ml-4 h-[64px] max-w-[100%] px-2 sm:px-6 md:m-auto md:h-auto md:max-w-[90%] lg:px-8 lg:py-4">
@@ -140,10 +141,8 @@ export default function NavBar({
                     <WalletMenu
                       address={address}
                       disconnect={disconnect}
-                      isConnected={false}
-                      handleOpen={function (): void {
-                        throw new Error("Function not implemented.");
-                      }}
+                      isConnected={isConnected}
+                      handleOpen={handleModal.handleOpen}
                     />
                   ) : (
                     <button
@@ -225,71 +224,3 @@ const navigation = [
   { name: "Extensions", href: "#", current: false },
   { name: "Vote", href: "#", current: false },
 ];
-
-const WalletMenu = ({
-  isConnected,
-  address,
-  disconnect,
-  handleOpen,
-}: {
-  isConnected: boolean;
-  address: `0x${string}` | undefined;
-  disconnect: any;
-  handleOpen: () => void;
-}) => {
-  return (
-    <Menu as="div" className="relative ml-3">
-      <Menu.Button
-        onClick={() => (isConnected ? null : handleOpen())}
-        className="rounded-full bg-gray-900 p-1 p-3 px-6 text-sm text-gray-400 outline outline-[1px] outline-[#00c289] hover:text-white"
-      >
-        <p className="hidden md:inline-block">{address?.slice(0, 12)}</p>
-        <div className="flex md:hidden">
-          <Image
-            className=""
-            width={12}
-            height={12}
-            src="https://w7.pngwing.com/pngs/205/486/png-transparent-computer-icons-wallet-wallet-angle-text-rectangle-thumbnail.png"
-            alt="Workflow"
-          />
-        </div>
-      </Menu.Button>
-      {isConnected ? (
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 text-white shadow-lg">
-            {/* <Menu.Item>
-            <div className="flex">
-              <p className="text-xs">{address?.slice(0, 8)}</p>
-              <Image
-                src="https://pixlok.com/wp-content/uploads/2021/10/Copy-Icon-03ndfdkgff.png"
-                width={6}
-                height={6}
-                alt="copy-icon"
-              />
-            </div>
-          </Menu.Item> */}
-            <Menu.Item>
-              <a
-                href="#"
-                onClick={() => disconnect()}
-                className="block px-4 py-2 text-sm text-white"
-              >
-                Disconnected Wallet
-              </a>
-            </Menu.Item>
-          </Menu.Items>
-        </Transition>
-      ) : (
-        <></>
-      )}
-    </Menu>
-  );
-};
