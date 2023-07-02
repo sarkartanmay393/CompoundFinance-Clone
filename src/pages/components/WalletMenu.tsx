@@ -8,17 +8,17 @@ const WalletMenu = ({
   isConnected,
   address,
   disconnect,
-  handleOpen,
+  showModal,
 }: {
   isConnected: boolean;
   address: `0x${string}` | undefined;
   disconnect: any;
-  handleOpen: () => void;
+  showModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
     <Menu as="div" className="relative ml-3">
       <Menu.Button
-        onClick={() => (isConnected ? null : handleOpen())}
+        onClick={() => (isConnected ? null : showModal(true))}
         className="rounded-full bg-gray-900 p-1 p-3 px-6 text-sm text-gray-400 outline outline-[1px] outline-[#00c289] hover:text-white"
       >
         <p className="hidden md:inline-block">{address?.slice(0, 12)}</p>

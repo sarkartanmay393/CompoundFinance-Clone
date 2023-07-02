@@ -27,7 +27,7 @@ export default function Home() {
         >
           <ModalContent handleClose={handleClose} />
         </Modal>
-        {/* <NavBar isDark handleModal={{ handleClose, handleOpen }} /> */}
+        <NavBar isDark showModal={setOpen} />
         <CoinDashboard isDark />
         <MoreOfCoin isDark />
         <OtherCoinsInfo isDark />

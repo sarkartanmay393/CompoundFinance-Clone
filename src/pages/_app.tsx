@@ -45,9 +45,13 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 
   return (
     <>
-      <WagmiConfig config={wagmiConfig}>
-        <Component {...pageProps} />
-      </WagmiConfig>
+      {ready ? (
+        <WagmiConfig config={wagmiConfig}>
+          <Component {...pageProps} />
+        </WagmiConfig>
+      ) : (
+        <></>
+      )}
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </>
   );

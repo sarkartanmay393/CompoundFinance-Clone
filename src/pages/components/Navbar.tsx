@@ -12,10 +12,10 @@ import WalletMenu from "./WalletMenu";
 
 export default function NavBar({
   isDark,
-  handleModal,
+  showModal,
 }: {
   isDark: boolean;
-  handleModal: { handleClose: () => void; handleOpen: () => void };
+  showModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
@@ -142,11 +142,11 @@ export default function NavBar({
                       address={address}
                       disconnect={disconnect}
                       isConnected={isConnected}
-                      handleOpen={handleModal.handleOpen}
+                      showModal={showModal}
                     />
                   ) : (
                     <button
-                      onClick={handleModal.handleOpen}
+                      onClick={() => showModal(true)}
                       className="rounded-full bg-gray-900 p-1 p-3 px-6 text-sm text-gray-400 outline outline-[1px] outline-[#00c289] hover:text-white"
                     >
                       <p className="hidden lg:block">Connect Wallet</p>
@@ -173,7 +173,7 @@ export default function NavBar({
                     address={address}
                     disconnect={disconnect}
                     isConnected={isConnected}
-                    handleOpen={handleModal.handleOpen}
+                    showModal={showModal}
                   />
                 )}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white">
